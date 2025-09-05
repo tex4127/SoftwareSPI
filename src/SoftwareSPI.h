@@ -76,6 +76,29 @@ class SSPIClass{ //: public SPIClass{
             //Serial.printf("\nSSPIClass::transfer(word) o -> %u\n", o);
             return o;
         }
+        inline uint16_t transfer16(uint16_t word){
+            uint16_t o = 0;
+            if(dataOrder == MSBFIRST){
+                word = 
+                    (word&0x0001) << 15 |
+                    (word&0x0002) << 13 |
+                    (word&0x0004) << 11 |
+                    (word&0x0008) << 9 |
+                    (word&0x0010) << 7 |
+                    (word&0x0020) << 5 |
+                    (word&0x0040) << 3 |
+                    (word&0x0080) << 1 |
+                    (word&0x0100) >> 1 |
+                    (word&0x0200) >> 3 |
+                    (word&0x0400) >> 5 |
+                    (word&0x0800) >> 7 |
+                    (word&0x1000) >> 9 |
+                    (word&0x2000) >> 11 |
+                    (word&0x4000) >> 13 |
+                    (word&0x8000) >> 15;
+            }
+            /* to do, finish this method | above flipping is valid */
+        }
         /// @brief Transfers a buffer of data to our SPI device and stores the response into the buffer
         /// @param buffer buffer of data to be written to to the SPI Device
         /// @param size number of bytes to be written
